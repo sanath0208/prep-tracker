@@ -466,7 +466,19 @@
     return html;
   }
 
+  function getOpenDays() {
+    const open = [];
+    document.querySelectorAll('.day-card').forEach(card => {
+      const body = card.querySelector('.day-body');
+      if (body && !body.classList.contains('hidden')) {
+        open.push(`${card.dataset.week}-${card.dataset.day}`);
+      }
+    });
+    return open;
+  }
+
   function renderContent() {
+    const openDays = getOpenDays();
     const content = document.getElementById('content');
     const weekIdx = currentWeek - 1;
     const week = PLAN_DATA[weekIdx];
@@ -486,7 +498,10 @@
       html += `<div class="day-meta">`;
       html += `<span class="day-badge ${allDone ? 'done' : ''}">${ds.done}/${ds.total}</span>`;
       html += `</div></div>`;
-      html += `<div class="day-body${di > 0 ? ' hidden' : ''}">`;
+      const isOpen = openDays.length > 0
+        ? openDays.includes(`${weekIdx}-${di}`)
+        : di === 0;
+      html += `<div class="day-body${isOpen ? '' : ' hidden'}">`;
 
       tasks.forEach((task) => {
         const done = isCompleted(task.id);
