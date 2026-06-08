@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>12-Week Interview Prep Tracker</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0d1117; color: #c9d1d9; min-height: 100vh; }
+    .app { max-width: 900px; margin: 0 auto; padding: 20px; }
+    h1 { font-size: 1.6rem; margin-bottom: 8px; color: #f0f6fc; }
+    .subtitle { color: #8b949e; margin-bottom: 24px; font-size: 0.9rem; }
+    .progress-bar { background: #21262d; border-radius: 8px; height: 14px; margin-bottom: 24px; overflow: hidden; position: relative; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, #238636, #2ea043); border-radius: 8px; transition: width 0.4s ease; }
+    .progress-text { position: absolute; right: 8px; top: 0; line-height: 14px; font-size: 0.65rem; color: #f0f6fc; font-weight: 600; }
+    .stats { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+    .stat { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 12px 16px; flex: 1; min-width: 100px; text-align: center; }
+    .stat-num { font-size: 1.5rem; font-weight: 700; color: #58a6ff; }
+    .stat-label { font-size: 0.72rem; color: #8b949e; margin-top: 2px; }
+    .week-nav { display: flex; gap: 6px; margin-bottom: 20px; flex-wrap: wrap; }
+    .week-btn { background: #21262d; border: 1px solid #30363d; color: #c9d1d9; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; transition: all 0.2s; }
+    .week-btn:hover { border-color: #58a6ff; color: #58a6ff; }
+    .week-btn.active { background: #1f6feb; border-color: #1f6feb; color: #fff; }
+    .week-btn.complete { background: #238636; border-color: #238636; color: #fff; }
+    .day-card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; margin-bottom: 12px; overflow: hidden; transition: border-color 0.2s; }
+    .day-card.all-done { border-color: #238636; }
+    .day-header { padding: 14px 18px; border-bottom: 1px solid #21262d; display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; }
+    .day-header:hover { background: #1c2128; }
+    .day-title { font-weight: 600; color: #f0f6fc; font-size: 0.95rem; }
+    .day-meta { display: flex; align-items: center; gap: 8px; }
+    .day-badge { font-size: 0.72rem; padding: 3px 8px; border-radius: 12px; background: #21262d; color: #8b949e; }
+    .day-badge.done { background: #238636; color: #fff; }
+    .day-body { padding: 8px 18px 14px; }
+    .day-body.hidden { display: none; }
+    .task { display: flex; align-items: flex-start; gap: 10px; padding: 9px 0; border-bottom: 1px solid #1c2128; }
+    .task:last-child { border-bottom: none; }
+    .task input[type="checkbox"] { width: 18px; height: 18px; margin-top: 3px; accent-color: #238636; cursor: pointer; flex-shrink: 0; }
+    .task-text { font-size: 0.87rem; line-height: 1.45; flex: 1; }
+    .task.completed .task-text { text-decoration: line-through; color: #484f58; }
+    .tag { display: inline-block; font-size: 0.68rem; padding: 2px 6px; border-radius: 4px; margin-left: 6px; font-weight: 600; vertical-align: middle; }
+    .tag-dsa { background: #1f3a5f; color: #58a6ff; }
+    .tag-sd { background: #3d1f00; color: #f0883e; }
+    .tag-infra { background: #1a3a1a; color: #56d364; }
+    .tag-ai { background: #3d1a4a; color: #bc8cff; }
+    .tag-behavioral { background: #3d2f00; color: #d29922; }
+    .tag-mock { background: #3d0d1a; color: #f85149; }
+    .tag-paper { background: #1a2a3a; color: #79c0ff; }
+    .tag-resume { background: #2a2a2a; color: #b1bac4; }
+    .tag-review { background: #2a1a2a; color: #db61a2; }
+    .task-content { flex: 1; min-width: 0; }
+    .task-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+    .task-actions { display: flex; gap: 4px; flex-shrink: 0; opacity: 0; transition: opacity 0.15s; }
+    .task:hover .task-actions { opacity: 1; }
+    .note-btn { background: none; border: 1px solid #30363d; color: #8b949e; width: 26px; height: 26px; border-radius: 4px; cursor: pointer; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; }
+    .note-btn:hover { border-color: #58a6ff; color: #58a6ff; }
+    .note-btn.has-note { border-color: #d29922; color: #d29922; opacity: 1; }
+    .delete-btn { background: none; border: 1px solid #30363d; color: #8b949e; width: 26px; height: 26px; border-radius: 4px; cursor: pointer; font-size: 0.72rem; display: flex; align-items: center; justify-content: center; }
+    .delete-btn:hover { border-color: #f85149; color: #f85149; }
+    .task-note { margin-top: 6px; padding: 8px 10px; background: #1c2128; border-left: 3px solid #d29922; border-radius: 4px; font-size: 0.8rem; color: #b1bac4; white-space: pre-wrap; cursor: pointer; line-height: 1.4; }
+    .task-note:hover { background: #21262d; }
+    .note-editor { margin-top: 8px; }
+    .note-textarea { width: 100%; min-height: 70px; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; color: #c9d1d9; padding: 10px; font-size: 0.82rem; font-family: inherit; resize: vertical; line-height: 1.4; }
+    .note-textarea:focus { outline: none; border-color: #58a6ff; }
+    .note-editor-actions { display: flex; gap: 8px; margin-top: 6px; }
+    .note-save-btn { background: #238636; border: none; color: #fff; padding: 5px 12px; border-radius: 4px; cursor: pointer; font-size: 0.78rem; }
+    .note-save-btn:hover { background: #2ea043; }
+    .note-cancel-btn { background: transparent; border: 1px solid #30363d; color: #8b949e; padding: 5px 12px; border-radius: 4px; cursor: pointer; font-size: 0.78rem; }
+    .note-cancel-btn:hover { border-color: #8b949e; color: #c9d1d9; }
+    .add-task-row { padding: 8px 0 4px; }
+    .add-task-btn { background: none; border: 1px dashed #30363d; color: #8b949e; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; width: 100%; text-align: left; }
+    .add-task-btn:hover { border-color: #58a6ff; color: #58a6ff; }
+    .add-task-form { display: flex; flex-direction: column; gap: 8px; padding: 4px 0; }
+    .add-task-input { background: #0d1117; border: 1px solid #30363d; border-radius: 6px; color: #c9d1d9; padding: 9px 12px; font-size: 0.85rem; font-family: inherit; }
+    .add-task-input:focus { outline: none; border-color: #58a6ff; }
+    .add-task-tag { background: #0d1117; border: 1px solid #30363d; border-radius: 6px; color: #c9d1d9; padding: 6px 10px; font-size: 0.8rem; width: fit-content; }
+    .add-task-tag:focus { outline: none; border-color: #58a6ff; }
+    .add-task-form-actions { display: flex; gap: 8px; }
+    .add-task-submit { background: #238636; border: none; color: #fff; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; }
+    .add-task-submit:hover { background: #2ea043; }
+    .add-task-cancel { background: transparent; border: 1px solid #30363d; color: #8b949e; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; }
+    .add-task-cancel:hover { border-color: #8b949e; color: #c9d1d9; }
+    .tag-custom { background: #2a2a3a; color: #a5b4fc; }
+    .section-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.8px; color: #8b949e; padding: 10px 0 4px; font-weight: 600; }
+    /* Streak & Today banner */
+    .streak-banner { background: linear-gradient(135deg, #161b22, #1c2128); border: 1px solid #30363d; border-radius: 10px; padding: 16px 20px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; }
+    .streak-left { display: flex; align-items: center; gap: 12px; }
+    .streak-fire { font-size: 1.8rem; }
+    .streak-num { font-size: 1.6rem; font-weight: 700; color: #f0883e; }
+    .streak-label { font-size: 0.75rem; color: #8b949e; }
+    .streak-right { text-align: right; }
+    .streak-today { font-size: 0.82rem; color: #c9d1d9; }
+    .streak-remaining { font-size: 0.72rem; color: #8b949e; margin-top: 2px; }
+    /* Overdue section */
+    .overdue-section { background: #1a0000; border: 1px solid #f8514933; border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; }
+    .overdue-title { color: #f85149; font-size: 0.82rem; font-weight: 600; margin-bottom: 8px; }
+    .overdue-task { font-size: 0.82rem; color: #f0883e; padding: 4px 0; }
+    /* Difficulty rating */
+    .difficulty-row { display: flex; align-items: center; gap: 6px; margin-top: 6px; }
+    .diff-label { font-size: 0.7rem; color: #8b949e; }
+    .diff-btn { background: #21262d; border: 1px solid #30363d; color: #8b949e; width: 24px; height: 24px; border-radius: 4px; cursor: pointer; font-size: 0.7rem; }
+    .diff-btn:hover { border-color: #58a6ff; color: #58a6ff; }
+    .diff-btn.active { border-color: #f0883e; color: #f0883e; background: #3d1f00; }
+    .diff-btn.diff-1.active { border-color: #238636; color: #238636; background: #0d2818; }
+    .diff-btn.diff-2.active { border-color: #56d364; color: #56d364; background: #1a3a1a; }
+    .diff-btn.diff-3.active { border-color: #d29922; color: #d29922; background: #3d2f00; }
+    .diff-btn.diff-4.active { border-color: #f0883e; color: #f0883e; background: #3d1f00; }
+    .diff-btn.diff-5.active { border-color: #f85149; color: #f85149; background: #3d0d1a; }
+    /* Weekly chart */
+    .chart-section { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 16px 18px; margin-bottom: 20px; }
+    .chart-title { font-size: 0.78rem; color: #8b949e; margin-bottom: 10px; font-weight: 600; }
+    .chart-bars { display: flex; align-items: flex-end; gap: 3px; height: 60px; }
+    .chart-bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; }
+    .chart-bar { width: 100%; min-width: 8px; background: #238636; border-radius: 3px 3px 0 0; transition: height 0.3s; }
+    .chart-bar.today { background: #58a6ff; }
+    .chart-bar.empty { background: #21262d; }
+    .chart-day-label { font-size: 0.6rem; color: #484f58; margin-top: 4px; }
+    .chart-bar-wrap.today .chart-day-label { color: #58a6ff; }
+    /* Auth section */
+    .auth-section { display: flex; justify-content: center; align-items: center; min-height: 80vh; }
+    .auth-card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 40px 36px; width: 100%; max-width: 380px; }
+    .auth-card h2 { color: #f0f6fc; margin-bottom: 6px; font-size: 1.4rem; }
+    .auth-card p { color: #8b949e; font-size: 0.85rem; margin-bottom: 24px; }
+    .auth-input { width: 100%; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; color: #c9d1d9; padding: 10px 14px; font-size: 0.9rem; font-family: inherit; margin-bottom: 12px; }
+    .auth-input:focus { outline: none; border-color: #58a6ff; }
+    .auth-btn { width: 100%; background: #238636; border: none; color: #fff; padding: 11px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; font-weight: 600; margin-top: 4px; }
+    .auth-btn:hover { background: #2ea043; }
+    .auth-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .auth-switch { color: #58a6ff; font-size: 0.82rem; text-align: center; margin-top: 16px; cursor: pointer; text-decoration: none; display: block; }
+    .auth-switch:hover { text-decoration: underline; }
+    .auth-error { color: #f85149; font-size: 0.8rem; margin-top: 12px; text-align: center; min-height: 20px; }
+    /* User header bar */
+    .user-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding: 10px 14px; background: #161b22; border: 1px solid #30363d; border-radius: 8px; }
+    .user-email { color: #8b949e; font-size: 0.8rem; }
+    .logout-btn { background: transparent; border: 1px solid #30363d; color: #8b949e; padding: 5px 12px; border-radius: 4px; cursor: pointer; font-size: 0.78rem; }
+    .logout-btn:hover { border-color: #f85149; color: #f85149; }
+    .footer { margin-top: 32px; padding-top: 16px; border-top: 1px solid #21262d; display: flex; justify-content: space-between; align-items: center; }
+    .reset-btn { background: transparent; border: 1px solid #30363d; color: #f85149; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; }
+    .reset-btn:hover { border-color: #f85149; background: #1a0000; }
+    .footer-note { color: #484f58; font-size: 0.72rem; }
+    @media (max-width: 600px) {
+      .stats { gap: 8px; }
+      .stat { padding: 10px 8px; min-width: 70px; }
+      .stat-num { font-size: 1.2rem; }
+      .week-nav { gap: 4px; }
+      .week-btn { padding: 6px 10px; font-size: 0.72rem; }
+      .auth-card { padding: 28px 20px; margin: 0 12px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Auth Section -->
+  <div class="auth-section" id="authSection" style="display:none;">
+    <div class="auth-card">
+      <h2>Interview Prep Tracker</h2>
+      <p>12-week plan with AI/ML projects, DSA, and system design</p>
+
+      <!-- Login Form -->
+      <form id="loginForm">
+        <input type="email" name="email" class="auth-input" placeholder="Email" required autocomplete="email">
+        <input type="password" name="password" class="auth-input" placeholder="Password" required autocomplete="current-password" minlength="6">
+        <button type="submit" class="auth-btn">Sign In</button>
+      </form>
+
+      <!-- Signup Form (hidden by default) -->
+      <form id="signupForm" style="display:none;">
+        <input type="email" name="email" class="auth-input" placeholder="Email" required autocomplete="email">
+        <input type="password" name="password" class="auth-input" placeholder="Password (min 6 characters)" required autocomplete="new-password" minlength="6">
+        <button type="submit" class="auth-btn">Sign Up</button>
+      </form>
+
+      <a class="auth-switch" id="switchToSignup" href="#">Don't have an account? Sign up</a>
+      <a class="auth-switch" id="switchToLogin" href="#" style="display:none;">Already have an account? Sign in</a>
+      <div class="auth-error" id="authError"></div>
+    </div>
+  </div>
+
+  <!-- App Section (hidden until logged in) -->
+  <div id="appSection" style="display:none;">
+    <div class="app">
+      <div class="user-header">
+        <span class="user-email" id="userEmail"></span>
+        <button class="logout-btn" id="logoutBtn">Sign Out</button>
+      </div>
+      <h1>12-Week Interview Prep</h1>
+      <p class="subtitle">25 hrs/week · NeetCode 150 · System Design · AI/ML · Behavioral</p>
+      <div class="streak-banner" id="streakBanner">
+        <div class="streak-left">
+          <span class="streak-fire">🔥</span>
+          <div>
+            <div class="streak-num" id="streakNum">0</div>
+            <div class="streak-label">day streak</div>
+          </div>
+        </div>
+        <div class="streak-right">
+          <div class="streak-today" id="streakToday"></div>
+          <div class="streak-remaining" id="streakRemaining"></div>
+        </div>
+      </div>
+      <div id="overdueSection"></div>
+      <div class="chart-section" id="chartSection">
+        <div class="chart-title">Tasks completed — last 14 days</div>
+        <div class="chart-bars" id="chartBars"></div>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+        <div class="progress-text" id="progressText">0%</div>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="stat-num" id="statDone">0</div><div class="stat-label">Tasks Done</div></div>
+        <div class="stat"><div class="stat-num" id="statTotal">0</div><div class="stat-label">Total Tasks</div></div>
+        <div class="stat"><div class="stat-num" id="statPercent">0%</div><div class="stat-label">Complete</div></div>
+        <div class="stat"><div class="stat-num" id="statWeek">1</div><div class="stat-label">Viewing Week</div></div>
+      </div>
+      <div class="week-nav" id="weekNav"></div>
+      <div id="content"></div>
+      <div class="footer">
+        <button class="reset-btn" onclick="resetAllProgress()">Reset All Progress</button>
+        <span class="footer-note">Synced to cloud ☁️</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Supabase JS SDK (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="supabase-config.js"></script>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
