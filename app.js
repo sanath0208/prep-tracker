@@ -443,7 +443,7 @@
 
   function tagHTML(tag) {
     const labels = {
-      dsa: 'DSA', sd: 'System Design', infra: 'Infra', ai: 'AI',
+      dsa: 'DSA', sd: 'System Design', ai: 'AI',
       behavioral: 'Behavioral', mock: 'Mock', paper: 'Paper',
       resume: 'Resume', review: 'Review', custom: 'Custom'
     };
