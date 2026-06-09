@@ -26,6 +26,7 @@ const PLAN_DATA = [
           { text: "LeetCode: Group Anagrams (#49) — Medium — hash with sorted key", tag: "dsa" },
           { text: "AI: How LLMs work — tokenization, next-token prediction, temperature, context windows, inference vs training (45 min)", tag: "ai" },
           { text: "AI: Explore API parameters hands-on — system prompts, temperature, max_tokens, stop sequences (30 min)", tag: "ai" },
+          { text: "Networking: TCP vs UDP — 3-way handshake, reliability, ordering, flow control. When to use each. Resource: Beej's Guide to Network Programming (free) (30 min)", tag: "sd" },
         ]
       },
       {
@@ -35,6 +36,7 @@ const PLAN_DATA = [
           { text: "Re-solve: Two Sum — should be <10 min now", tag: "dsa" },
           { text: "System Design: Stateless vs stateful services + CAP theorem basics (45 min)", tag: "sd" },
           { text: "Behavioral: Draft 2nd STAR story (Conflict resolution)", tag: "behavioral" },
+          { text: "OS: Processes vs Threads — PCB, context switching, user vs kernel threads. Resource: OSTEP Ch.4-6 (free: pages.cs.wisc.edu/~remzi/OSTEP/) (30 min)", tag: "sd" },
         ]
       },
       {
@@ -44,6 +46,7 @@ const PLAN_DATA = [
           { text: "Warm-up re-solve: Valid Anagram — target <5 min", tag: "dsa" },
           { text: "AI: Prompt engineering fundamentals — system prompts, few-shot, chain-of-thought, structured output (45 min)", tag: "ai" },
           { text: "AI: Practice structured output — use JSON mode to get reliable structured responses from Claude and GPT (30 min)", tag: "ai" },
+          { text: "Backend: How a web request flows end-to-end — DNS → TCP handshake → TLS → HTTP → Load Balancer → App Server → DB → Response. Draw the full diagram (30 min)", tag: "sd" },
         ]
       },
       {
@@ -53,6 +56,7 @@ const PLAN_DATA = [
           { text: "System Design: Caching fundamentals — LRU, TTL, cache-aside, write-through (45 min)", tag: "sd" },
           { text: "AI: Read about embeddings — word2vec intuition, sentence embeddings, when to use which model (30 min)", tag: "ai" },
           { text: "AI: Generate embeddings for 10 sentences, compute cosine similarity, understand distance metrics (30 min)", tag: "ai" },
+          { text: "Reading: Alex Xu Vol 1 Ch.1 — Scale from Zero to Millions of Users (single server → DB separation → LB → cache → CDN → stateless tier) (45 min)", tag: "sd" },
         ]
       },
       {
@@ -89,6 +93,7 @@ const PLAN_DATA = [
           { text: "LeetCode: Two Sum II (#167) — Medium — sorted-array two pointer", tag: "dsa" },
           { text: "System Design: L4 vs L7 load balancers, round-robin, least-conn, sticky sessions (45 min)", tag: "sd" },
           { text: "Behavioral: Refine Leadership story — add metrics, tighten action section", tag: "behavioral" },
+          { text: "Multithreading: Thread lifecycle, race conditions, critical sections, mutex vs semaphore, deadlock (4 conditions). Resource: OSTEP Ch.26-28 (30 min)", tag: "sd" },
         ]
       },
       {
@@ -98,6 +103,7 @@ const PLAN_DATA = [
           { text: "Re-solve: Valid Palindrome — should be trivial now", tag: "dsa" },
           { text: "AI: Vector databases overview — Pinecone, ChromaDB, pgvector, Weaviate. When to use which (30 min)", tag: "ai" },
           { text: "AI: RAG architecture — chunking strategies, embedding, retrieval, generation. Draw the full pipeline (45 min)", tag: "ai" },
+          { text: "OS: Virtual memory — paging, page tables, TLB, page faults, demand paging. Why processes get isolated address spaces. Resource: OSTEP Ch.15-19 (30 min)", tag: "sd" },
         ]
       },
       {
@@ -107,6 +113,7 @@ const PLAN_DATA = [
           { text: "LeetCode: Trapping Rain Water (#42) — Hard — two-pointer or stack (take 60 min, it's ok)", tag: "dsa" },
           { text: "System Design: Caching layers — CDN cache, reverse-proxy cache, application cache, DB cache (45 min)", tag: "sd" },
           { text: "Behavioral: Refine Conflict story — tighten to 2 min spoken", tag: "behavioral" },
+          { text: "Networking: DNS resolution end-to-end — recursive vs iterative queries, A/AAAA/CNAME records, TTL. HTTP/1.1 vs HTTP/2 (multiplexing, header compression) (30 min)", tag: "sd" },
         ]
       },
       {
@@ -116,6 +123,7 @@ const PLAN_DATA = [
           { text: "LeetCode: Longest Substring Without Repeating Characters (#3) — Medium — window + set", tag: "dsa" },
           { text: "AI: Build a RAG pipeline from scratch — chunk a doc, embed with OpenAI, store in ChromaDB, query (60 min)", tag: "ai" },
           { text: "AI: Experiment with chunk sizes (200 vs 500 vs 1000 tokens) — observe retrieval quality differences (20 min)", tag: "ai" },
+          { text: "Reading: Alex Xu Vol 1 Ch.2 — Back-of-envelope Estimation (latency numbers every programmer should know, QPS calculations, storage estimates) (30 min)", tag: "sd" },
         ]
       },
       {
@@ -125,6 +133,7 @@ const PLAN_DATA = [
           { text: "System Design: Cache eviction deep-dive — LRU, LFU, TTL, write-through vs write-back (45 min)", tag: "sd" },
           { text: "AI: Hybrid search — combine keyword (BM25) + vector search. Why pure vector isn't enough (30 min read + implement)", tag: "ai" },
           { text: "Code with AI: Use Claude to critique your Trapping Rain Water solution — ask for tighter code + edge cases", tag: "ai" },
+          { text: "Backend: ACID properties, transaction isolation levels (Read Uncommitted → Read Committed → Repeatable Read → Serializable). Resource: DDIA Ch.7 or Alex Xu (30 min)", tag: "sd" },
         ]
       },
       {
@@ -161,6 +170,7 @@ const PLAN_DATA = [
           { text: "LeetCode: Search a 2D Matrix (#74) — Medium — flat-index binary search", tag: "dsa" },
           { text: "System Design: REST vs GraphQL vs gRPC — pros/cons/when to use (45 min)", tag: "sd" },
           { text: "AI: LLM tool calling / function calling — OpenAI function calling, Anthropic tool use. How it works under the hood (45 min)", tag: "ai" },
+          { text: "Distributed Systems: Consistency models (strong, eventual, causal), partition tolerance. Deep-dive on CAP/PACELC with real examples (Dynamo=AP, Spanner=CP) (30 min)", tag: "sd" },
         ]
       },
       {
@@ -170,6 +180,7 @@ const PLAN_DATA = [
           { text: "Re-solve: Binary Search (#704) — template from memory", tag: "dsa" },
           { text: "AI: Implement a tool-calling loop — LLM decides which function to call, you execute it, return result (60 min)", tag: "ai" },
           { text: "Behavioral: Map your 3 stories to Amazon LPs (Ownership, Dive Deep, Bias for Action)", tag: "behavioral" },
+          { text: "Multiprocessing: Process creation (fork/exec), IPC mechanisms (pipes, shared memory, message queues, sockets), zombie/orphan processes. Resource: OSTEP Ch.5 (30 min)", tag: "sd" },
         ]
       },
       {
@@ -179,6 +190,7 @@ const PLAN_DATA = [
           { text: "LeetCode: Search in Rotated Sorted Array (#33) — Medium — pivoted search", tag: "dsa" },
           { text: "System Design: API versioning strategies + pagination patterns (cursor vs offset) (45 min)", tag: "sd" },
           { text: "Behavioral: Draft 4th STAR story (Technical decision ownership)", tag: "behavioral" },
+          { text: "Networking: TCP congestion control (slow start, AIMD, fast retransmit), flow control (sliding window). Why UDP is used for gaming/video/DNS (30 min)", tag: "sd" },
         ]
       },
       {
@@ -187,6 +199,8 @@ const PLAN_DATA = [
           { text: "LeetCode: Time Based Key-Value Store (#981) — Medium — binary search on history", tag: "dsa" },
           { text: "AI: AI agent architectures — ReAct pattern, plan-and-execute, reflection loops. Implement ReAct from scratch (60 min)", tag: "ai" },
           { text: "AI: Read 'ReAct: Synergizing Reasoning and Acting' (Yao et al. 2022) — abstract + method section (25 min)", tag: "ai" },
+          { text: "Reading: Alex Xu Vol 1 Ch.3 — A Framework for System Design Interviews (4-step process: understand → high-level → deep-dive → wrap-up) (30 min)", tag: "sd" },
+          { text: "Multithreading: Thread pools, producer-consumer pattern, readers-writers problem, condition variables. Write a simple thread pool in Python (45 min)", tag: "sd" },
         ]
       },
       {
@@ -196,6 +210,7 @@ const PLAN_DATA = [
           { text: "LeetCode: Merge Two Sorted Lists (#21) — Easy — dummy node pattern", tag: "dsa" },
           { text: "LeetCode: Add Two Numbers (#2) — Medium — linked list arithmetic + carry", tag: "dsa" },
           { text: "System Design: API design walkthrough — design an API for a feature you've built (45 min)", tag: "sd" },
+          { text: "Reading: Alex Xu Vol 1 Ch.4 — Design a Rate Limiter (token bucket, sliding window counter, sliding window log algorithms) (45 min)", tag: "sd" },
         ]
       },
       {
@@ -242,6 +257,7 @@ const PLAN_DATA = [
           { text: "LeetCode: Balanced Binary Tree (#110) — Easy — DFS height check", tag: "dsa" },
           { text: "AI: Build a simple MCP tool server — expose 2-3 tools via MCP protocol, connect to Claude Desktop or custom client (60 min)", tag: "ai" },
           { text: "AI: Read about eval fundamentals — why evals matter, assertion-based tests, LLM-as-Judge pattern (30 min)", tag: "ai" },
+          { text: "Distributed Systems: Consensus algorithms — Raft (leader election, log replication, safety). Paxos intuition. Why distributed consensus is hard (split-brain). Resource: Raft paper visualization (thesecretlivesofdata.com/raft) (30 min)", tag: "sd" },
         ]
       },
       {
@@ -251,6 +267,7 @@ const PLAN_DATA = [
           { text: "LeetCode: Subtree of Another Tree (#572) — Easy — recursion + sameTree", tag: "dsa" },
           { text: "System Design: Database replication (sync/async), read replicas, failover (45 min)", tag: "sd" },
           { text: "Behavioral: Draft 5th STAR story (Cross-team collaboration)", tag: "behavioral" },
+          { text: "OS: I/O models — blocking, non-blocking, I/O multiplexing (select/poll/epoll/kqueue), async I/O. Why Node.js event loop and Go goroutines work. Resource: 'The C10K Problem' article (30 min)", tag: "sd" },
         ]
       },
       {
@@ -260,6 +277,7 @@ const PLAN_DATA = [
           { text: "LeetCode: Binary Tree Level Order Traversal (#102) — Medium — BFS queue", tag: "dsa" },
           { text: "AI: Write assertion-based evals for your RAG pipeline — test 10 queries, check retrieval relevance + answer quality (45 min)", tag: "ai" },
           { text: "AI: Implement LLM-as-Judge — use GPT-4 to evaluate another model's outputs with a rubric (30 min)", tag: "ai" },
+          { text: "Distributed Systems: Distributed transactions (2PC, 3PC, Saga pattern), distributed locks (Redlock), idempotency keys. When to use which (30 min)", tag: "sd" },
         ]
       },
       {
@@ -269,6 +287,7 @@ const PLAN_DATA = [
           { text: "LeetCode: Count Good Nodes in Binary Tree (#1448) — Medium — DFS w/ max-so-far", tag: "dsa" },
           { text: "System Design: Sharding strategies (range, hash, geo) + consistent hashing (45 min)", tag: "sd" },
           { text: "AI: Read 'Chain-of-Thought Prompting Elicits Reasoning' (Wei et al. 2022) — understand why CoT works (20 min)", tag: "ai" },
+          { text: "Reading: Alex Xu Vol 1 Ch.5-6 — Consistent Hashing (virtual nodes, rebalancing) + Key-Value Store Design (data partitioning, replication, consistency, failure handling) (45 min)", tag: "sd" },
         ]
       },
       {
